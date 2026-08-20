@@ -2,57 +2,119 @@ import { useState } from "react";
 import Header from "../components/Header";
 import Display from "../components/Display";
 import CalculatorButtons from "../components/CalculatorButtons";
+import Theme from "../components/Theme";
 
 function Home() {
   const [display, setDisplay] = useState("");
-
+  const [theme, setTheme] = useState(1);
   const handleButtonClick = (value) => {
 
-  // Reset
-  if (value === "Reset") {
-    setDisplay("");
-    return;
-  }
-
-  // Delete last character
-  if (value === "DEL") {
-    setDisplay((prev) => prev.slice(0, -1));
-    return;
-  }
-
-  // Equal
-  if (value === "=") {
-    try {
-      const expression = display.replace("÷", "/");
-      const result = eval(expression);
-
-      setDisplay(String(result));
-    } catch {
-      setDisplay("Error");
+    if (value === "Reset") {
+      setDisplay("");
+      return;
     }
 
-    return;
-  }
+    if (value === "DEL") {
+      setDisplay((prev) => prev.slice(0, -1));
+      return;
+    }
 
-  // Numbers + operators
-  setDisplay((prev) => prev + value);
-};
+    if (value === "=") {
+      try {
+        const expression = display;
+        const result = eval(expression);
+
+        setDisplay(String(result));
+      } catch {
+        setDisplay("Error");
+      }
+
+      return;
+    }
+// if (value === "=") {
+//   if (display === "") {
+//     return;
+//   }
+
+//   try {
+//     const expression = display;
+//     const result = eval(expression);
+
+//     setDisplay(String(result));
+//   } catch {
+//     setDisplay("Error");
+//   }
+
+//   return;
+// }
+
+
+    if (["+", "-", "*", "/", "."].includes(value)) {
+      setDisplay((prev) => {
+
+        if (prev === "") {
+          return prev;
+        }
+
+        if (["+", "-", "*", "/", "."].includes(prev.slice(-1))) {
+          return prev.slice(0, -1) + value;
+        }
+
+        return prev + value;
+      });
+
+      return;
+    }
+
+    setDisplay((prev) => prev + value);
+  };
+  const buttonbgColor =
+    theme === 1
+      ? "bg-gray-800"
+      : theme === 2
+      ? "bg-gray-100"
+      : "bg-[#111A4A]";
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-6">
+  <div
+  className={`min-h-screen flex items-center justify-center p-6 ${
+    theme === 1
+      ? "bg-gray-500"
+      : theme === 2
+      ? "bg-white"
+      : "bg-black"
+  }`}
+>
 
-        <Header />
+    <div className="w-full max-w-md">
 
-        <Display display={display} />
+      <div className="flex justify-between items-center mb-6">
 
-        <CalculatorButtons
-          onButtonClick={handleButtonClick}
+        <Header theme={theme} />
+
+        <Theme
+          theme={theme}
+          setTheme={setTheme}
         />
 
       </div>
-    </div>
-  );
+
+      <Display
+        display={display}
+        theme={theme}
+      />
+<div className={`${buttonbgColor} rounded-2xl p-5`}>
+  <CalculatorButtons
+    onButtonClick={handleButtonClick}
+    theme={theme}
+  />
+
+</div>
+</div>
+  </div>
+);
 }
 
 export default Home;
+
+// bg-white rounded-3xl shadow-xl p-6
