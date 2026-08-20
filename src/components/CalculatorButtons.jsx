@@ -201,22 +201,22 @@ function CalculatorButtons({ onButtonClick, theme }) {
     theme === 1
       ? "bg-gray-100 text-black border-b-4 border-gray-500"
       : theme === 2
-      ? "bg-white text-black border-b-4 border-gray-500"
-      : "bg-[#293B91] text-[#F5C400] border-b-4 border-[#A855F7]";
+        ? "bg-white text-black border-b-4 border-gray-500"
+        : "bg-[#293B91] text-[#F5C400] border-b-4 border-[#A855F7]";
 
   const actionButtonColor =
     theme === 1
       ? "bg-gray-500 text-white border-b-4 border-gray-700"
       : theme === 2
-      ? "bg-blue-400 text-white border-b-4 border-blue-900"
-      : "bg-[#7C3AED] text-white border-b-4 border-[#A855F7]";
+        ? "bg-blue-400 text-white border-b-4 border-blue-900"
+        : "bg-[#7C3AED] text-white border-b-4 border-[#A855F7]";
 
   const equalButtonColor =
     theme === 1
       ? "bg-[#C85407] text-white border-b-4 border-[#8F3A00]"
       : theme === 2
-      ? "bg-[#C85407] text-white border-b-4 border-[#8F3A00]"
-      : "bg-[#22D3EE] text-white border-b-4 border-[#0891B2]";
+        ? "bg-[#C85407] text-white border-b-4 border-[#8F3A00]"
+        : "bg-[#22D3EE] text-white border-b-4 border-[#0891B2]";
 
   return (
     <div className="grid grid-cols-4 gap-3">
@@ -235,17 +235,15 @@ function CalculatorButtons({ onButtonClick, theme }) {
             onClick={() => onButtonClick(button)}
             className={`
               h-16 rounded-xl shadow font-bold
-              ${
-                isEqual
-                  ? equalButtonColor
-                  : isAction
+              ${isEqual
+                ? equalButtonColor
+                : isAction
                   ? actionButtonColor
                   : normalButtonColor
               }
-              ${
-                button === "Reset" || button === "="
-                  ? "col-span-2"
-                  : ""
+              ${button === "Reset" || button === "="
+                ? "col-span-2"
+                : ""
               }
             `}
           >

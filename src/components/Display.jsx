@@ -11,12 +11,12 @@
 // export default Display;
 
 function Display({ display, theme }) {
-const displayColor =
+  const displayColor =
     theme === 1
-          ? "bg-black text-white"
-          : theme === 2
-          ? "bg-white text-black"
-          : "bg-[#111A4A] text-[#F5C400]"
+      ? "bg-black text-white"
+      : theme === 2
+        ? "bg-white text-black"
+        : "bg-[#111A4A] text-[#F5C400]"
 
   return (
     <div

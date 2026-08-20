@@ -19,8 +19,8 @@ function Header({ theme }) {
     theme === 1
       ? "text-white"
       : theme === 2
-      ? "text-black"
-      : "text-[#F5C400]";
+        ? "text-black"
+        : "text-[#F5C400]";
 
   return (
     <header className="w-full flex justify-between items-center mb-6">
