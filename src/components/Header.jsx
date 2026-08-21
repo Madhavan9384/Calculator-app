@@ -1,18 +1,3 @@
-// function Header() {
-//   return (
-//     <header className="flex justify-between items-center mb-8">
-//       <h1 className="text-2xl font-bold">
-//         CLC
-//       </h1>
-
-//       <button className="text-lg font-medium">
-//         Theme
-//       </button>
-//     </header>
-//   );
-// }
-
-// export default Header;
 function Header({ theme }) {
 
   const textColor =
@@ -23,10 +8,10 @@ function Header({ theme }) {
         : "text-[#F5C400]";
 
   return (
-    <header className="w-full flex justify-between items-center mb-6">
+    <header className="w-full flex justify-between items-center  ">
 
       <h1 className={`text-2xl font-bold ${textColor}`}>
-        CLC
+        calc
       </h1>
 
     </header>

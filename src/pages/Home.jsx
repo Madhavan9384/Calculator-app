@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Display from "../components/Display";
 import CalculatorButtons from "../components/CalculatorButtons";
@@ -6,7 +6,16 @@ import Theme from "../components/Theme";
 
 function Home() {
   const [display, setDisplay] = useState("");
-  const [theme, setTheme] = useState(1);
+
+  const [theme, setTheme] = useState(() => {
+    return Number(localStorage.getItem("theme")) || 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  },);
+
+
   const handleButtonClick = (value) => {
 
     if (value === "Reset") {
@@ -18,66 +27,56 @@ function Home() {
       setDisplay((prev) => prev.slice(0, -1));
       return;
     }
-
-//     if (value === "=") {
-
-//   if (display === "") {
-//     return;
-//   }
-
-//   try {
-//     const expression = display;
-//     const result = eval(expression);
-
-//     setDisplay(String(result));
-//   } catch {
-//     setDisplay("Error");
-//   }
-
-//   return;
-// }
-
-
-if (value === "=") {
-  if (display === "") {
-    return;
-  }
-
-  try {
-    const numbers = display.split(/([+\-*])/);
-
-    let result = Number(numbers[0]);
-
-    for (let i = 1; i < numbers.length; i += 2) {
-      const operator = numbers[i];
-      const nextNumber = Number(numbers[i + 1]);
-
-      if (operator === "+") {
-        result = result + nextNumber;
+    if (value === "=") {
+      if (display === "") {
+        return;
       }
 
-      if (operator === "-") {
-        result = result - nextNumber;
+      try {
+        const numbers = display.split(/([+\-*/])/); // 2 * 2 + 6 * 2
+
+
+        for (let i = 1; i < numbers.length; i += 2) {
+          const operator = numbers[i];
+
+          if (operator === "*" || operator === "/") {
+            const left = Number(numbers[i - 1]);
+            const right = Number(numbers[i + 1]);
+
+            const result =
+              operator === "*"
+                ? left * right
+                : left / right;
+
+            numbers.splice(i - 1, 3, String(result));
+
+            i -= 2;
+          }
+        }
+
+
+        let result = Number(numbers[0]);
+
+        for (let i = 1; i < numbers.length; i += 2) {
+          const operator = numbers[i];
+          const nextNumber = Number(numbers[i + 1]);
+
+          if (operator === "+") {
+            result = result + nextNumber;
+          }
+
+          if (operator === "-") {
+            result = result - nextNumber;
+          }
+        }
+
+        setDisplay(String(result));
+      } catch {
+        setDisplay("Error");
       }
 
-      if (operator === "*") {
-        result = result * nextNumber;
-      }
-
-      if (operator === "/") {
-        result = result / nextNumber;
-      }
+      return;
     }
-
-    setDisplay(String(result));
-  } catch {
-    setDisplay("Error");
-  }
-
-  return;
-}
-
-
     if (["+", "-", "*", "/", "."].includes(value)) {
       setDisplay((prev) => {
 
@@ -107,10 +106,10 @@ if (value === "=") {
   return (
     <div
       className={`min-h-screen flex items-center justify-center p-6 ${theme === 1
-          ? "bg-gray-500"
-          : theme === 2
-            ? "bg-white"
-            : "bg-black"
+        ? "bg-gray-500"
+        : theme === 2
+          ? "bg-white"
+          : "bg-black"
         }`}
     >
 
@@ -135,6 +134,7 @@ if (value === "=") {
           <CalculatorButtons
             onButtonClick={handleButtonClick}
             theme={theme}
+            display={display}
           />
 
         </div>
@@ -144,6 +144,24 @@ if (value === "=") {
 }
 
 export default Home;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // bg-white rounded-3xl shadow-xl p-6
 

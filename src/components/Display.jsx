@@ -1,15 +1,3 @@
-// function Display({ display }) {
-//   return (
-//     <div className="w-full min-h-24 bg-gray-100 rounded-xl mb-6 px-4 py-3 flex items-center justify-end overflow-hidden">
-//       <p className="text-3xl font-bold break-all text-right">
-//         {display || "0"}
-//       </p>
-//     </div>
-//   );
-// }
-
-// export default Display;
-
 function Display({ display, theme }) {
   const displayColor =
     theme === 1
